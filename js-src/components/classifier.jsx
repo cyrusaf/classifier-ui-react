@@ -19,7 +19,7 @@ class Classifier extends React.Component {
 
   classify() {
     let self = this
-    Axios.post("http://127.0.0.1:5000/classify", {
+    Axios.post("http://localhost:5000/classify", {
       text: self.state.content
     }).then(function(response) {
       console.log(response)
@@ -49,7 +49,7 @@ class Classifier extends React.Component {
           onClick={this.classify}
           className="btn btn-primary btn-block">
           Classify Text</button>
-           <p className="category">{this.state.category}</p>
+        <p className="category">{this.state.category}</p>
       </div>
     )
   }

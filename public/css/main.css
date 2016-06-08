@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  padding-bottom: 30px;
 }
 
 section .container {
@@ -9,19 +10,25 @@ section .container {
 
 h1 {
 
-  font-size: 3em;
+  font-size: 2.8em;
   margin-top: 0;
   margin-bottom: 30px;
   padding-top: 50px;
+  font-weight: 600;
+}
+
+h2 {
+  font-family: 'Droid Serif';
 }
 
 p {
-  font-size: 1.1em;
+  font-family: 'Droid Serif';
+  font-size: 1.2em;
 }
 
 #splash {
   height: 80vh;
-  background: url('../img/books.jpg');
+  background: url('../img/books2.jpg');
   background-size: cover;
   background-attachment: fixed;
 }
@@ -30,7 +37,7 @@ p {
   color: #fff;
   margin: 0;
   text-align: center;
-  text-shadow: 0 0 10px rgba(0,0,0,.8);
+  text-shadow: 0 0 10px rgba(0,0,0,.6);
   font-weight: 600;
   padding-top: 30vh;
   font-size: 4.5em;
@@ -43,10 +50,12 @@ p {
   text-align: center;
   color: #fff;
   text-shadow: 0 0 10px rgba(0,0,0,.8);
-  font-size: 1.6em;
+  font-size: 1.7em;
+  font-family: 'Droid Serif';
 }
 
 .classifier {
+  margin-top: 50px;
 }
 
 textarea {
@@ -59,6 +68,7 @@ button {
 }
 
 .category {
+  font-family: 'Font Awesome';
   margin-top: 20px;
   text-align: center;
   font-size: 2em;
