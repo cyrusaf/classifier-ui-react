@@ -19,6 +19,11 @@
       <div class="container">
 
         <div id="classifier"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
 
         <h1>Introduction</h1>
         <h2>Motivation</h2>
@@ -33,21 +38,62 @@
         <h2>Methodology</h2>
         <p>
           After collecting the categorized articles from Wikipedia, we trained a Naive Bayes classifier. We used the Naive
-          Bayes implementation from the Python package <a href="http://scikit-learn.org/stable/modules/naive_bayes.html">sklearn</a>.
-          The bulk of our work was the data collection process. Since there are thousands of documents that we need to retrieve
-          from Wikipedia, we had to create a efficent and concurrent retreival method. We also had to tweak the structure of the
-          dataset for best results. How many categories? What should the categories be? How specific should the categories be?
+          Bayes implementation from the Python package <a href="http://scikit-learn.org/stable/modules/naive_bayes.html">sklearn</a>,
+          and we used <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html">Pandas dataframes</a>
+          to manipulate the dataset. We can pass in a string of text to our Naive Bayes classifier and it will return the category
+          that has the highest probability of containing the passed in text.
         </p>
 
         <h2>Testing and Training Data</h2>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi facilisis, est id varius auctor, dui risus vulputate neque, id egestas tellus lorem id justo. Phasellus aliquam, metus sit amet interdum mattis, diam mi mollis odio, quis commodo tortor urna vel quam. Etiam pulvinar lectus id odio cursus, ut egestas purus sodales. Integer id sollicitudin nulla, sed luctus arcu. Aenean sagittis neque libero, eu dictum quam blandit a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Donec a dui scelerisque, sodales dui vel, consectetur erat. Aenean pulvinar placerat metus eu blandit.
+          The bulk of our work was the data collection process. Since there are thousands of documents that we needed to retrieve
+          from Wikipedia, we had to create a efficient and concurrent retreival method. We also had to tweak the structure of the
+          dataset for the best results. How many categories should we have? What should the categories be? How specific should the
+          categories be?
         </p>
 
         <h2>Results</h2>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi facilisis, est id varius auctor, dui risus vulputate neque, id egestas tellus lorem id justo. Phasellus aliquam, metus sit amet interdum mattis, diam mi mollis odio, quis commodo tortor urna vel quam. Etiam pulvinar lectus id odio cursus, ut egestas purus sodales. Integer id sollicitudin nulla, sed luctus arcu. Aenean sagittis neque libero, eu dictum quam blandit a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Donec a dui scelerisque, sodales dui vel, consectetur erat. Aenean pulvinar placerat metus eu blandit.
+          We used 10 fold validation to test our Naive Bayes classifier. 1/10th of the dataset was randomly choosen to be the testing
+          data, while the other 9/10ths were used for training. We tested our dataset using five, ten, fifteen and twenty categories.
+          The results are below:
         </p>
+
+        <br />
+
+        <div id="results_chart"></div>
+
+        <br />
+
+        <table class="table table-hover" style="display: none;">
+          <thead>
+            <tr>
+              <th width="270px;">
+                Category Size
+              </th>
+              <th>
+                Precision
+              </th>
+              <th>
+                Recall
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>5</th> <td>99.01%</td> <td>sdf</td>
+            </tr>
+            <tr>
+              <th>10</th> <td>sdf</td> <td>sdf</td>
+            </tr>
+            <tr>
+              <th>15</th> <td>sdf</td> <td>sdf</td>
+            </tr>
+            <tr>
+              <th>20</th> <td>sdf</td> <td>sdf</td>
+            </tr>
+          </tbody>
+        </table>
 
         <h1>Detailed Report</h1>
         <p>

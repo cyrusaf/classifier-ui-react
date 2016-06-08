@@ -3,6 +3,10 @@ body {
   padding-bottom: 30px;
 }
 
+section {
+  position: relative;
+}
+
 section .container {
   width: 900px;
   margin: auto;
@@ -27,6 +31,7 @@ p {
 }
 
 #splash {
+  z-index: 0;
   height: 80vh;
   background: url('../img/books2.jpg');
   background-size: cover;

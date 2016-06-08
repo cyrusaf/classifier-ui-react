@@ -28,10 +28,6 @@ class Classifier extends React.Component {
 
   }
 
-  getStyle() {
-    return {width: "300px"}
-  }
-
   render () {
     return (
       <div
