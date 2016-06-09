@@ -22288,6 +22288,9 @@
 	          }]
 	        },
 	        options: {
+	          tooltips: {
+	            mode: 'label'
+	          },
 	          maintainAspectRatio: false,
 	          title: {
 	            display: true,

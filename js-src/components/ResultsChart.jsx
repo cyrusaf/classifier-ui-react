@@ -32,6 +32,9 @@ class ResultsChart extends React.Component {
         }]
       },
       options: {
+        tooltips: {
+          mode: 'label'
+        },
         maintainAspectRatio: false,
         title: {
           display: true,
