@@ -6,3 +6,4 @@ import ResultsChart from './components/ResultsChart.jsx'
 
 render(<Classifier width="100%" height="300px"/>, document.getElementById('classifier'));
 render(<ResultsChart />, document.getElementById('results_chart'));
+render(<ResultsChart i="2"/>, document.getElementById('results_chart2'));

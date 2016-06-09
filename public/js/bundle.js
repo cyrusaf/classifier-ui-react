@@ -67,6 +67,7 @@
 	
 	(0, _reactDom.render)(_react2.default.createElement(_Classifier2.default, { width: '100%', height: '300px' }), document.getElementById('classifier'));
 	(0, _reactDom.render)(_react2.default.createElement(_ResultsChart2.default, null), document.getElementById('results_chart'));
+	(0, _reactDom.render)(_react2.default.createElement(_ResultsChart2.default, { i: '2' }), document.getElementById('results_chart2'));
 
 /***/ },
 /* 1 */
@@ -20921,7 +20922,7 @@
 	          'button',
 	          {
 	            onClick: this.classify,
-	            className: 'btn btn-primary btn-block' },
+	            className: 'btn btn-primary btn-block btn-lg' },
 	          'Classify Text'
 	        ),
 	        _react2.default.createElement(
@@ -22267,26 +22268,11 @@
 	  _createClass(ResultsChart, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.state.ctx = document.getElementById("results_chart_ctx");
+	      this.state.ctx = document.getElementById("results_chart_ctx_" + this.props.i);
 	      console.log(this.state.ctx);
 	      var myLineChart = new _chart2.default(this.state.ctx, {
-	        type: 'line',
-	        data: {
-	          labels: ["5", "10", "15", "20"],
-	          datasets: [{
-	            label: "Precision",
-	            data: [1, 2, 3, 4],
-	            fill: true,
-	            borderColor: "rgba(52, 152, 219,0.8)",
-	            backgroundColor: "rgba(52, 152, 219,0.3)"
-	          }, {
-	            label: "Recall",
-	            data: [2, 1, 4, 3],
-	            fill: true,
-	            borderColor: "rgba(46, 204, 113,0.8)",
-	            backgroundColor: "rgba(46, 204, 113,0.3)"
-	          }]
-	        },
+	        type: 'bar',
+	        data: { "labels": ["Electronics", "Mythology", "Geography and Places", "Religion", "Biology", "Mathematics", "Computing", "Nature", "History and Events", "Physical Sciences", "Games and Toys", "Arts and Entertainment", "Sports", "Transport"], "datasets": [{ "data": [73.23232323232324, 92.5925925925926, 65.65656565656566, 77.77777777777777, 71.73913043478261, 59.09090909090909, 82.3529411764706, 76.92307692307692, 78.04878048780488, 100.0, 100.0, 65.04854368932038, 91.20879120879121, 70.0], "backgroundColor": "rgba(52, 152, 219,0.3)", "borderColor": "rgba(52, 152, 219,0.8)", "label": "Precision" }, { "data": [92.35668789808918, 78.125, 73.03370786516854, 46.666666666666664, 83.54430379746836, 52.0, 73.6842105263158, 25.0, 73.5632183908046, 20.0, 13.793103448275861, 89.33333333333333, 79.04761904761905, 74.24242424242425], "backgroundColor": "rgba(46, 204, 113,0.3)", "borderColor": "rgba(46, 204, 113,0.8)", "label": "Recall" }] },
 	        options: {
 	          tooltips: {
 	            mode: 'label'
@@ -22300,7 +22286,7 @@
 	            xAxes: [{
 	              scaleLabel: {
 	                display: true,
-	                labelString: "Number of Categories"
+	                labelString: "Categories"
 	              }
 	            }],
 	            yAxes: [{
@@ -22322,13 +22308,20 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'results_chart' },
-	        _react2.default.createElement('canvas', { id: 'results_chart_ctx', width: '100%', height: '500' })
+	        _react2.default.createElement('canvas', { id: 'results_chart_ctx_' + this.props.i, width: '100%', height: '500' })
 	      );
 	    }
 	  }]);
 	
 	  return ResultsChart;
 	}(_react2.default.Component);
+	
+	ResultsChart.propTypes = {
+	  i: _react2.default.PropTypes.string.isRequired
+	};
+	ResultsChart.defaultProps = {
+	  i: "1"
+	};
 	
 	exports.default = ResultsChart;
 

@@ -43,7 +43,7 @@ class Classifier extends React.Component {
 
         <button
           onClick={this.classify}
-          className="btn btn-primary btn-block">
+          className="btn btn-primary btn-block btn-lg">
           Classify Text</button>
         <p className="category">{this.state.category}</p>
       </div>

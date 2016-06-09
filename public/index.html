@@ -12,7 +12,8 @@
     <section id="splash">
       <h1>Wikipedia Document Classifier</h1>
       <div class="caption">Final Project for Machine Learning (EECS 349)</div>
-      <div class="caption">By Cyrus Forbes, Dylan McCann, and Niall</div>
+      <div class="caption">By Cyrus Forbes, Dylan McCann, and Niall Pereira</div>
+      <div class="caption">forbescyrus@gmail.com</div>
 
       <div class="container">
         <div id="classifier"></div>
@@ -29,7 +30,7 @@
     <section>
       <div class="container">
 
-        <h1>Introduction</h1>
+        <h1>Abstract</h1>
         <h2>Motivation</h2>
         <p>
           Document classification has many modern day applications. Google has used document classification successfully
@@ -52,71 +53,46 @@
         <p>
           The bulk of our work was the data collection process. Since there are thousands of documents that we needed to retrieve
           from Wikipedia, we had to create a efficient and concurrent retreival method. We also had to tweak the structure of the
-          dataset for the best results. How many categories should we have? What should the categories be? How specific should the
-          categories be? We used <a href="https://en.wikipedia.org/wiki/Portal:Contents/Categories">Wikipedia's categories</a> to
+          dataset for the best results. What should the categories be? How do we know if a category is performing well? We used <a href="https://en.wikipedia.org/wiki/Portal:Contents/Categories">Wikipedia's categories</a> to
           provide a basis of where to start.
         </p>
 
         <h2>Results</h2>
         <p>
           We used 10 fold validation to test our Naive Bayes classifier. 1/10th of the dataset was randomly choosen to be the testing
-          data, while the other 9/10ths were used for training. We tested our dataset using five, ten, fifteen and twenty categories.
-          The results are below:
+          data, while the other 9/10ths were used for training. We confirmed that Wikipedia articles work as training data for an accurate classifier.
+          We can also see that certain categories perform very differently - should we split these categories with low recall up or should we combine them with other ones?
         </p>
-
-        <br />
+        <br>
 
         <div id="results_chart"></div>
 
-        <br />
-
-        <table class="table table-hover" style="display: none;">
-          <thead>
-            <tr>
-              <th width="270px;">
-                Category Size
-              </th>
-              <th>
-                Precision
-              </th>
-              <th>
-                Recall
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>5</th> <td>99.01%</td> <td>sdf</td>
-            </tr>
-            <tr>
-              <th>10</th> <td>sdf</td> <td>sdf</td>
-            </tr>
-            <tr>
-              <th>15</th> <td>sdf</td> <td>sdf</td>
-            </tr>
-            <tr>
-              <th>20</th> <td>sdf</td> <td>sdf</td>
-            </tr>
-          </tbody>
-        </table>
-
         <h1>Detailed Report</h1>
-        <h2>Abstract</h2>
+        <h2>Introduction</h2>
         <p>
-          Our task is to predict the category that a body of text belongs to. We use <a href=”https://en.wikipedia.org/wiki/Portal:Contents/Categories”>Wikipedia’s
+          Our task is to predict the category that a body of text belongs to. We use <a href="https://en.wikipedia.org/wiki/Portal:Contents/Categories">Wikipedia’s
           list of categories</a> to define our outputs - and the body of each article (under a category) as
           the training data for the outputs. Our has mainly focused on retrieving the data from wikipedia in
           a timely manner. We will first talk about our methodology of retrieving the data, then we will
-          talk about how we structured the data, and finally we will discuss our results. We set out to
-          determine how changing the number of categories of the classifier alters the precision of the classifier.
+          talk about how we structured the data, and finally we will discuss our results.
         </p>
 
         <h2>Retrieving the Data</h2>
         <p>
-          In order to retrieve the data we had to scrape 50,000+ articles from wikipedia. Originally we were using 500,000+ articles (for 500+ categories), but we did not see great results with so many categories, so we reduced the number of categories to between 10 and 30. If we scraped the articles one by one and each http request took 0.2 seconds on average (a low estimate), it would take 3 hours to scrape all the pages. We managed to scrape all pages in less than 1 minute by taking advantage of Golang’s concurrency features.
+          In order to retrieve the data we had to scrape 50,000+ articles from wikipedia. Originally we were using
+          500,000+ articles (for 500+ categories), but we did not see great results with so many categories, so we
+          reduced the number of categories to between 14. If we scraped the articles one by one and each http request
+          took 0.2 seconds on average (a low estimate), it would take 3 hours to scrape all the pages. We managed to
+          scrape all pages in less than 1 minute by taking advantage of Golang’s concurrency features.
         </p>
         <p>
-          Without going into too much detail, we have a seperate thread for each category, which scrapes the articles one by one in each category. This means that we can have many http requests going at once so that no time is wasted waiting for the http responses. We ran into an issue with having too many threads making requests would cause an error (due to too many concurrent http requests at once), so we modified the code to restrict the total number of threads to a number where the code ran smoothly (15 threads). We stored all the data in a hierarchy of folders where each folder is named after a category and within each folder are documents containing the body of the wikipedia articles in that category (see Figure 1).
+          Without going into too much detail, we have a seperate thread for each category, which scrapes the articles one
+          by one in each category. This means that we can have many http requests going at once so that no time is wasted
+          waiting for the http responses. We ran into an issue with having too many threads making requests would cause an
+          error (due to too many concurrent http requests at once), so we modified the code to restrict the total number of
+          threads to a number where the code ran smoothly. We stored all the data in a hierarchy of folders where
+          each folder is named after a category and within each folder are documents containing the body of the wikipedia
+          articles in that category (see Figure 1).
         </p>
 
         <img src="img/folders.png" alt="Figure 1: Scraped Categories from Wikipedia (text files inside each folder)" />
@@ -132,7 +108,30 @@
         <div class="figure_caption"><span>Figure 2:</span> YAML Configuration File</div>
 
         <p>
-          Originally we used every single subcategory on wikipedia as a category (500+), but this caused our classifier to be highly inaccurate. We switched over to using the YAML configuration file so we could define our own custom categories and consolidate many subcategories within a single category. In order to test the effect that the number of categories has on accuracy, we made four different YAML configuration files - with 10, 15, 20, and 25 different categories respectively.
+          Originally we used every single subcategory on wikipedia as a category (500+), but this caused our classifier to be highly
+          inaccurate. We switched over to using the YAML configuration file so we could define our own custom categories and consolidate
+          many subcategories within a single category.
+        </p>
+
+        <h2>The Classifier</h2>
+        <p>
+          Since we used sklearn’s Naive Bayes classifier, there is not too much to talk about mention it comes to implementation. Sklearn’s
+          Naive Bayes is a multinomial classifier, so it takes multiple instances of a word into account. We used Panda’s dataframes to store
+          and manipulate the data - such as randomly ordering it for 10-fold classification.
+        </p>
+
+        <h2>Results and Future Work</h2>
+        <p>
+          Our results show that Wikipedia articles are excellent training data for a classifier. How do we know which categories should
+          be grouped together and which should be seperated? It seems that the lower the recall value, the broader the category. Thus, we should
+          seperate out categories into more specific categories if their recall value is low and we should consolidate categories with low precision values.
+        </p>
+        <br>
+
+        <div id="results_chart2"></div>
+
+        <p>
+          Our categories, being manually defined, are not the optimal categories. Future work should include finding a balance between number of categories and accuracy. Figuring out what the categories should be is a difficult question. It can be done through trial and error manually, but that would take a very long time and require a lot of human input. Another way would be to use a genetic algorithm to maximize classifier accuracy and number of categories. The genes would represent the categories and the subcategories within each category.  Another method might be through unsupervised learning to group the documents into categories.
         </p>
       </div>
     </section>
