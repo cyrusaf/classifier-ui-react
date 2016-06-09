@@ -20896,7 +20896,7 @@
 	    key: 'classify',
 	    value: function classify() {
 	      var self = this;
-	      _axios2.default.post("http://localhost:5000/classify", {
+	      _axios2.default.post("http://107.170.128.83:5000/classify", {
 	        text: self.state.content
 	      }).then(function (response) {
 	        console.log(response);
