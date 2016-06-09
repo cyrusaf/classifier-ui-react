@@ -101,13 +101,39 @@
         </table>
 
         <h1>Detailed Report</h1>
+        <h2>Abstract</h2>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi facilisis, est id varius auctor, dui risus vulputate neque, id egestas tellus lorem id justo. Phasellus aliquam, metus sit amet interdum mattis, diam mi mollis odio, quis commodo tortor urna vel quam. Etiam pulvinar lectus id odio cursus, ut egestas purus sodales. Integer id sollicitudin nulla, sed luctus arcu. Aenean sagittis neque libero, eu dictum quam blandit a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Donec a dui scelerisque, sodales dui vel, consectetur erat. Aenean pulvinar placerat metus eu blandit.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi facilisis, est id varius auctor, dui risus vulputate neque, id egestas tellus lorem id justo. Phasellus aliquam, metus sit amet interdum mattis, diam mi mollis odio, quis commodo tortor urna vel quam. Etiam pulvinar lectus id odio cursus, ut egestas purus sodales. Integer id sollicitudin nulla, sed luctus arcu. Aenean sagittis neque libero, eu dictum quam blandit a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Donec a dui scelerisque, sodales dui vel, consectetur erat. Aenean pulvinar placerat metus eu blandit.
+          Our task is to predict the category that a body of text belongs to. We use <a href=”https://en.wikipedia.org/wiki/Portal:Contents/Categories”>Wikipedia’s
+          list of categories</a> to define our outputs - and the body of each article (under a category) as
+          the training data for the outputs. Our has mainly focused on retrieving the data from wikipedia in
+          a timely manner. We will first talk about our methodology of retrieving the data, then we will
+          talk about how we structured the data, and finally we will discuss our results. We set out to
+          determine how changing the number of categories of the classifier alters the precision of the classifier.
         </p>
 
+        <h2>Retrieving the Data</h2>
+        <p>
+          In order to retrieve the data we had to scrape 50,000+ articles from wikipedia. Originally we were using 500,000+ articles (for 500+ categories), but we did not see great results with so many categories, so we reduced the number of categories to between 10 and 30. If we scraped the articles one by one and each http request took 0.2 seconds on average (a low estimate), it would take 3 hours to scrape all the pages. We managed to scrape all pages in less than 1 minute by taking advantage of Golang’s concurrency features.
+        </p>
+        <p>
+          Without going into too much detail, we have a seperate thread for each category, which scrapes the articles one by one in each category. This means that we can have many http requests going at once so that no time is wasted waiting for the http responses. We ran into an issue with having too many threads making requests would cause an error (due to too many concurrent http requests at once), so we modified the code to restrict the total number of threads to a number where the code ran smoothly (15 threads). We stored all the data in a hierarchy of folders where each folder is named after a category and within each folder are documents containing the body of the wikipedia articles in that category (see Figure 1).
+        </p>
+
+        <img src="img/folders.png" alt="Figure 1: Scraped Categories from Wikipedia (text files inside each folder)" />
+        <div class="figure_caption"><span>Figure 1:</span> Scraped Categories from Wikipedia (text files inside each folder)</div>
+
+        <h2>Transforming the Data</h2>
+        <p>
+          We defined our categories in a YAML file (see Figure 2). The YAML file contained category names and a list of
+          Wikipedia links to subcategory pages. Each <a href="https://en.wikipedia.org/wiki/Category:Medicine">subcategory page</a> contains many links to Wikipedia
+          documents - which our Golang script will retrieve and store on the hard drive.
+        </p>
+        <img src="img/yaml.png" alt="Figure 2: YAML Configuration File" />
+        <div class="figure_caption"><span>Figure 2:</span> YAML Configuration File</div>
+
+        <p>
+          Originally we used every single subcategory on wikipedia as a category (500+), but this caused our classifier to be highly inaccurate. We switched over to using the YAML configuration file so we could define our own custom categories and consolidate many subcategories within a single category. In order to test the effect that the number of categories has on accuracy, we made four different YAML configuration files - with 10, 15, 20, and 25 different categories respectively.
+        </p>
       </div>
     </section>
 
