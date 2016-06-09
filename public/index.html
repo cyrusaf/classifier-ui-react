@@ -37,7 +37,7 @@
         <h2>Methodology</h2>
         <p>
           After collecting the categorized articles from Wikipedia, we trained a multinomial Naive Bayes classifier. We used the Naive
-          Bayes implementation from the Python package <a href="http://scikit-learn.org/stable/modules/naive_bayes.html">sklearn</a>,
+          Bayes implementation from the Python package <a href="http://scikit-learn.org/stable/modules/naive_bayes.html">sklearn</a>
           and we used <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html">Pandas dataframes</a>
           to manipulate the dataset. We can pass in a string of text to our Naive Bayes classifier and it will return the category
           that has the highest probability of containing the passed in text.
@@ -70,8 +70,8 @@
         <p>
           Our task is to predict the category that a body of text belongs to. We use <a href="https://en.wikipedia.org/wiki/Portal:Contents/Categories">Wikipedia’s
           list of categories</a> to define our outputs - and the body of each article (under a category) as
-          the training data for the outputs. Our has mainly focused on retrieving the data from wikipedia in
-          a timely manner. We will first talk about our methodology of retrieving the data, then we will
+          the training data for the outputs. Our work has mainly focused on retrieving the data from wikipedia in
+          a timely manner and categorizing the data. We will first talk about our methodology of retrieving the data, then we will
           talk about how we structured the data, and finally we will discuss our results.
         </p>
 
@@ -79,15 +79,15 @@
         <p>
           In order to retrieve the data we had to scrape 50,000+ articles from wikipedia. Originally we were using
           500,000+ articles (for 500+ categories), but we did not see great results with so many categories, so we
-          reduced the number of categories to 14. If we scraped the articles one by one and each http request
-          took 0.2 seconds on average (a low estimate), it would take 3 hours to scrape all the pages. We managed to
+          reduced the number of categories to 14. If we scraped the articles one by one and each HTTP request
+          took 0.2 seconds on average, it would take 3 hours to scrape all the pages. We managed to
           scrape all pages in less than 1 minute by taking advantage of Golang’s concurrency features.
         </p>
         <p>
           Without going into too much detail, we have a seperate thread for each category, which scrapes the articles one
           by one in each category. This means that we can have many http requests going at once so that no time is wasted
-          waiting for the http responses. We ran into an issue with having too many threads making requests would cause an
-          error (due to too many concurrent http requests at once), so we modified the code to restrict the total number of
+          waiting for the http responses. We ran into an issue where having too many threads making requests would cause an
+          error (due to too many concurrent HTTP requests at once), so we modified the code to restrict the total number of
           threads to a number where the code ran smoothly. We stored all the data in a hierarchy of folders where
           each folder is named after a category and within each folder are documents containing the body of the wikipedia
           articles in that category (see Figure 1).
@@ -141,6 +141,8 @@
           algorithm to maximize classifier accuracy and number of categories. The genes would represent the categories and the subcategories
           within each category.  Another method might be through unsupervised learning to group the documents into categories.
         </p>
+
+        <p><a href="https://github.com/cyrusaf/wikipedia_classifier">Github</a></p>
       </div>
     </section>
 
